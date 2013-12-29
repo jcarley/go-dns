@@ -56,6 +56,15 @@ func main() {
   }
 }
 
+func (credentials *Credentials) MarshalJSON(writer io.Writer) error {
+  encoder := json.NewEncoder(writer)
+  if err := encoder.Encode(credentials); err != nil {
+    return err
+  }
+
+  return nil
+}
+
 func routerIP() (string, error) {
 
   url := "http://jsonip.com"
