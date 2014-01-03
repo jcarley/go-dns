@@ -4,9 +4,16 @@ import (
   "fmt"
   "github.com/rubyist/go-dnsimple"
   "net/http"
+  "io"
   "io/ioutil"
   "encoding/json"
 )
+
+type Settings struct {
+  Credentials   Credentials
+  DomainRecords []DomainRecord
+  RouterIP      RouterIP
+}
 
 type Credentials struct {
   Email        string
