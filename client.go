@@ -10,12 +10,12 @@ import (
 )
 
 type Settings struct {
-  Credentials   Credentials
+  Credentials   ApiCredentials
   DomainRecords []DomainRecord
-  RouterIP      RouterIP
+  Router      Router
 }
 
-type Credentials struct {
+type ApiCredentials struct {
   Email        string
   Token        string
 }
@@ -25,13 +25,13 @@ type DomainRecord struct {
   RecordType   string
 }
 
-type RouterIP struct {
+type Router struct {
   IP    string
 }
 
 func main() {
 
-  credentials := Credentials {
+  credentials := ApiCredentials {
     Email: "email",
     Token: "token",
   }
@@ -63,7 +63,7 @@ func main() {
   }
 }
 
-func (credentials *Credentials) MarshalJSON(writer io.Writer) error {
+func (credentials *ApiCredentials) MarshalJSON(writer io.Writer) error {
   encoder := json.NewEncoder(writer)
   if err := encoder.Encode(credentials); err != nil {
     return err
@@ -97,7 +97,7 @@ func routerIP() (string, error) {
     return "", err
   }
 
-  routerIP := RouterIP{}
+  routerIP := Router{}
 
   err = json.Unmarshal(responseBytes, &routerIP)
 
