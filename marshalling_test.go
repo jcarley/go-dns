@@ -1,16 +1,16 @@
 package main
 
 import (
-  "testing"
-  "strings"
   "bytes"
   "github.com/stretchr/testify/assert"
   "log"
+  "strings"
+  "testing"
 )
 
 func TestMarshallingOfSettings(t *testing.T) {
 
-  domainRecords := []DomainRecord {
+  domainRecords := []DomainRecord{
     {"domainA", "A"},
     {"domainB", "A"},
     {"domainC", "A"},
@@ -45,4 +45,3 @@ func TestUnmarshallingOfSettings(t *testing.T) {
   assert.NotNil(t, settings)
   assert.Equal(t, settings.Credentials.Email, "joe@example.com")
 }
-

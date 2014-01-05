@@ -1,8 +1,8 @@
 package main
 
 import (
-  "io"
   "encoding/json"
+  "io"
 )
 
 type SettingsMarshaler interface {
@@ -12,7 +12,6 @@ type SettingsMarshaler interface {
 type SettingsUnMarshaler interface {
   UnmarshalSettings(reader io.Reader) (*Settings, error)
 }
-
 
 type JSONMarshaler struct{}
 
