@@ -1,75 +1,55 @@
 package main
 
 import (
-  "fmt"
-  "github.com/rubyist/go-dnsimple"
-  "net/http"
-  "io"
-  "io/ioutil"
   "encoding/json"
+  "fmt"
+  "io/ioutil"
+  "net/http"
+  "os"
+  // "github.com/rubyist/go-dnsimple"
+  // "log"
+  // "io"
 )
 
-type Settings struct {
-  Credentials   ApiCredentials
-  DomainRecords []DomainRecord
-  Router      Router
-}
-
-type ApiCredentials struct {
-  Email        string
-  Token        string
-}
-
-type DomainRecord struct {
-  Name         string
-  RecordType   string
-}
-
 type Router struct {
-  IP    string
+  IP string
 }
+
+const (
+  settingsFileName = "settings.json"
+)
 
 func main() {
 
-  credentials := ApiCredentials {
-    Email: "email",
-    Token: "token",
+  config, err := loadConfig()
+  if err != nil {
+    // fmt.Fprintf(os.Stderr, "Error loading configuration: \n\n%s\n", err)
+    fmt.Fprintf(os.Stderr, "%s", err)
   }
 
-  domainRecord := DomainRecord {
-    Name: "domain",
-    RecordType: "A",
-  }
+  fmt.Println(config.Email())
+  fmt.Println(config.Token())
 
-  ip, _ := routerIP()
-  fmt.Printf("RouterIP: %s\n", ip)
+  domain := config.LoadDomain("example.com")
+  fmt.Println(domain.Name)
+  fmt.Println(domain.RecordType)
+  fmt.Println(domain.CurrentIP)
 
-  newIP := "ip"
+  // client := dnsimple.NewClient(credentials.Token, credentials.Email)
 
-  client := dnsimple.NewClient(credentials.Token, credentials.Email)
+  // records, _ := client.Records(domainRecord.Name, "", domainRecord.RecordType)
 
-  records, _ := client.Records(domainRecord.Name, "", domainRecord.RecordType)
+  // for _, record := range records {
 
-  for _, record := range records {
+  // fmt.Printf("Record %d: %s => %s -> %s\n", record.Id, record.RecordType, record.Name, record.Content)
 
-    fmt.Printf("Record %d: %s => %s -> %s\n", record.Id, record.RecordType, record.Name, record.Content)
-
-    if record.RecordType == "A" && record.Content != newIP {
-      record.UpdateIP(client, newIP)
-      fmt.Println("Updated IP")
-    } else {
-      fmt.Println("IP's matched")
-    }
-  }
-}
-
-func (credentials *ApiCredentials) MarshalJSON(writer io.Writer) error {
-  encoder := json.NewEncoder(writer)
-  if err := encoder.Encode(credentials); err != nil {
-    return err
-  }
-
-  return nil
+  // if record.RecordType == "A" && record.Content != newIP {
+  // record.UpdateIP(client, newIP)
+  // fmt.Println("Updated IP")
+  // } else {
+  // fmt.Println("IP's matched")
+  // }
+  // }
 }
 
 func routerIP() (string, error) {
@@ -107,4 +87,3 @@ func routerIP() (string, error) {
 
   return routerIP.IP, nil
 }
-
