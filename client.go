@@ -3,10 +3,10 @@ package main
 import (
   "encoding/json"
   "fmt"
+  // "github.com/rubyist/go-dnsimple"
   "io/ioutil"
   "net/http"
   "os"
-  // "github.com/rubyist/go-dnsimple"
   // "log"
   // "io"
 )
@@ -21,21 +21,21 @@ const (
 
 func main() {
 
-  config, err := loadConfig()
+  config, err := loadConfig(settingsFileName)
   if err != nil {
-    // fmt.Fprintf(os.Stderr, "Error loading configuration: \n\n%s\n", err)
-    fmt.Fprintf(os.Stderr, "%s", err)
+    fmt.Fprintf(os.Stderr, "Error loading configuration: \n\n%s\n", err)
   }
 
-  fmt.Println(config.Email())
-  fmt.Println(config.Token())
+  d := config.LoadDomain("example.com")
+  fmt.Println(d.Name)
 
-  domain := config.LoadDomain("example.com")
-  fmt.Println(domain.Name)
-  fmt.Println(domain.RecordType)
-  fmt.Println(domain.CurrentIP)
+  // client := dnsimple.NewClient(config.Token(), config.Email())
 
-  // client := dnsimple.NewClient(credentials.Token, credentials.Email)
+  domains := config.LoadAllDomains()
+
+  for index := 0; index < len(domains); index++ {
+    fmt.Println(domains[index].Name)
+  }
 
   // records, _ := client.Records(domainRecord.Name, "", domainRecord.RecordType)
 
