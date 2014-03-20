@@ -27,7 +27,6 @@ clean:
 	@rm go-dns go-dns-linuxarm go-dns-linuxamd64 go-dns.exe
 
 format:
-	# @echo $(GOFILES) | xargs -n1 gofmt -l -w -tabs=false -tabwidth=2 $(GOFILES)
 	@echo "$(OK_COLOR)==> Formatting source files$(NO_COLOR)"
 	@echo $(GOFMT) -w ./...
 
