@@ -41,9 +41,9 @@ $ go-dns
 ```
 
 And thats it.  go-dns will print out your router ip, and if the IPs of
-the domains match or not.  If go-dns finds a mismatch, it will update IP
-to the router's IP.
+the domains match or not.  If go-dns finds a mismatch, it will update the
+domain IP to the router's IP.
 
 ## Available Downloads
 
-[Mac OS X amd64](http://dl.bintray.com/jcarley/go-dns/0.1_darwin_amd64.zip)
+Mac OS X [amd64](http://dl.bintray.com/jcarley/go-dns/0.1_darwin_amd64.zip) | [386](http://dl.bintray.com/jcarley/go-dns/0.1_darwin_386.zip)
