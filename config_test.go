@@ -17,20 +17,18 @@ const defaultConfig = `
   "domains": [
     {
       "name": "example.com",
-      "record-type": "A",
-      "current-ip": "0.0.0.0"
+      "record-type": "A"
     },
     {
       "name": "finishfirstsoftware.com",
-      "record-type": "A",
-      "current-ip": "0.0.0.0"
+      "record-type": "A"
     }
   ]
 }
 `
 
 func TestLoadAllDomains(t *testing.T) {
-  var config config
+  var config Config
   if err := decodeConfig(bytes.NewBufferString(defaultConfig), &config); err != nil {
     fmt.Fprintf(os.Stderr, "%s", err)
   }
@@ -46,7 +44,7 @@ func TestLoadAllDomains(t *testing.T) {
 
 func TestCredentialsAreReadFromConfig(t *testing.T) {
 
-  var config config
+  var config Config
   if err := decodeConfig(bytes.NewBufferString(defaultConfig), &config); err != nil {
     fmt.Fprintf(os.Stderr, "%s", err)
   }
@@ -56,48 +54,43 @@ func TestCredentialsAreReadFromConfig(t *testing.T) {
 }
 
 func TestDomainsAreReadFromConfig(t *testing.T) {
-  var config config
+  var config Config
   if err := decodeConfig(bytes.NewBufferString(defaultConfig), &config); err != nil {
     fmt.Fprintf(os.Stderr, "%s", err)
   }
 
-  domain := config.LoadDomain("example.com")
+  domain, _ := config.LoadDomain("example.com")
   assert.Equal(t, domain.Name, "example.com")
   assert.Equal(t, domain.RecordType, "A")
-  assert.Equal(t, domain.CurrentIP, "0.0.0.0")
 
-  domain = config.LoadDomain("finishfirstsoftware.com")
+  domain, _ = config.LoadDomain("finishfirstsoftware.com")
   assert.Equal(t, domain.Name, "finishfirstsoftware.com")
   assert.Equal(t, domain.RecordType, "A")
-  assert.Equal(t, domain.CurrentIP, "0.0.0.0")
 }
 
 func TestSettingsAreSavedToConfig(t *testing.T) {
 
-  var config config
+  var config Config
   if err := decodeConfig(bytes.NewBufferString(defaultConfig), &config); err != nil {
     fmt.Fprintf(os.Stderr, "%s", err)
   }
 
-  domain := config.LoadDomain("example.com")
-  domain.CurrentIP = "192.168.1.23"
+  domain, _ := config.LoadDomain("example.com")
   config.SaveDomain(domain)
 
-  domain = config.LoadDomain("example.com")
+  domain, _ = config.LoadDomain("example.com")
 
   assert.Equal(t, domain.Name, "example.com")
   assert.Equal(t, domain.RecordType, "A")
-  assert.Equal(t, domain.CurrentIP, "192.168.1.23")
 }
 
 func TestEncodingOfConfig(t *testing.T) {
-  var config config
+  var config Config
   if err := decodeConfig(bytes.NewBufferString(defaultConfig), &config); err != nil {
     fmt.Fprintf(os.Stderr, "%s", err)
   }
 
-  domain := config.LoadDomain("example.com")
-  domain.CurrentIP = "192.168.1.23"
+  domain, _ := config.LoadDomain("example.com")
   config.SaveDomain(domain)
 
   var buffer bytes.Buffer

@@ -18,7 +18,6 @@ type Config struct {
 type Domain struct {
   Name       string
   RecordType string
-  CurrentIP  string
 }
 
 func loadConfig(configFilePath string) (*Config, error) {
@@ -82,24 +81,20 @@ func (c *Config) Token() string {
 }
 
 func (c *Config) LoadAllDomains() []Domain {
-  domains := make([]Domain, 2, 2)
+  domains := make([]Domain, 0, len(c.Domains))
 
-  for index := 0; index < len(c.Domains); index++ {
-    domain := c.Domains[index]
-    d := Domain{Name: domain["name"], RecordType: domain["record-type"], CurrentIP: domain["current-ip"]}
-    domains[index] = d
+  for _, domain := range c.Domains {
+    d := Domain{Name: domain["name"], RecordType: domain["record-type"]}
+    domains = append(domains, d)
   }
 
   return domains
 }
 
 func (c *Config) LoadDomain(name string) (Domain, error) {
-  domains := c.Domains
-
-  for index := 0; index < len(domains); index++ {
-    domain := domains[index]
+  for _, domain := range c.Domains {
     if domain["name"] == name {
-      d := Domain{Name: domain["name"], RecordType: domain["record-type"], CurrentIP: domain["current-ip"]}
+      d := Domain{Name: domain["name"], RecordType: domain["record-type"]}
       return d, nil
     }
   }
@@ -115,7 +110,6 @@ func (c *Config) SaveDomain(domain Domain) {
       d := make(map[string]string)
       d["name"] = domain.Name
       d["record-type"] = domain.RecordType
-      d["current-ip"] = domain.CurrentIP
       c.Domains[index] = d
     }
   }

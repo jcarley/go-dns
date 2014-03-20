@@ -4,6 +4,5 @@ import (
   "testing"
 )
 
-func TestSettingsCanWrite(t *testing.T) {
+func TestLoadConfigFromSettingsFile(t *testing.T) {
 }
-
