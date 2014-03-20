@@ -101,16 +101,3 @@ func (c *Config) LoadDomain(name string) (Domain, error) {
 
   return Domain{}, errNotFound
 }
-
-func (c *Config) SaveDomain(domain Domain) {
-  domains := c.Domains
-
-  for index := 0; index < len(domains); index++ {
-    if domains[index]["name"] == domain.Name {
-      d := make(map[string]string)
-      d["name"] = domain.Name
-      d["record-type"] = domain.RecordType
-      c.Domains[index] = d
-    }
-  }
-}
