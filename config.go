@@ -3,11 +3,14 @@ package main
 import (
   "bytes"
   "encoding/json"
+  "errors"
   "io"
   "os"
 )
 
-type config struct {
+var errNotFound error = errors.New("Not found error")
+
+type Config struct {
   Credentials map[string]string
   Domains     []map[string]string
 }
@@ -18,8 +21,8 @@ type Domain struct {
   CurrentIP  string
 }
 
-func loadConfig(configFilePath string) (*config, error) {
-  var c *config
+func loadConfig(configFilePath string) (*Config, error) {
+  var c Config
 
   f, err := os.Open(configFilePath)
   if err != nil {
@@ -28,21 +31,20 @@ func loadConfig(configFilePath string) (*config, error) {
     }
     return nil, err
   }
-  defer f.Close()
 
-  if err := decodeConfig(f, c); err != nil {
+  if err := decodeConfig(f, &c); err != nil {
     return nil, err
   }
 
-  return c, nil
+  return &c, nil
 }
 
-func decodeConfig(r io.Reader, c *config) error {
+func decodeConfig(r io.Reader, c *Config) error {
   decoder := json.NewDecoder(r)
   return decoder.Decode(c)
 }
 
-func saveConfig(configFilePath string, c *config) error {
+func saveConfig(configFilePath string, c *Config) error {
   f, err := os.Create(configFilePath)
   if err != nil {
     return err
@@ -56,7 +58,7 @@ func saveConfig(configFilePath string, c *config) error {
   return nil
 }
 
-func encodeConfig(w io.Writer, c *config) error {
+func encodeConfig(w io.Writer, c *Config) error {
   b, err := json.MarshalIndent(c, "", "  ")
   if err != nil {
     return err
@@ -71,15 +73,15 @@ func encodeConfig(w io.Writer, c *config) error {
   return nil
 }
 
-func (c *config) Email() string {
+func (c *Config) Email() string {
   return c.Credentials["email"]
 }
 
-func (c *config) Token() string {
+func (c *Config) Token() string {
   return c.Credentials["token"]
 }
 
-func (c *config) LoadAllDomains() []Domain {
+func (c *Config) LoadAllDomains() []Domain {
   domains := make([]Domain, 2, 2)
 
   for index := 0; index < len(c.Domains); index++ {
@@ -91,21 +93,21 @@ func (c *config) LoadAllDomains() []Domain {
   return domains
 }
 
-func (c *config) LoadDomain(name string) Domain {
+func (c *Config) LoadDomain(name string) (Domain, error) {
   domains := c.Domains
 
   for index := 0; index < len(domains); index++ {
     domain := domains[index]
     if domain["name"] == name {
       d := Domain{Name: domain["name"], RecordType: domain["record-type"], CurrentIP: domain["current-ip"]}
-      return d
+      return d, nil
     }
   }
 
-  return Domain{}
+  return Domain{}, errNotFound
 }
 
-func (c *config) SaveDomain(domain Domain) {
+func (c *Config) SaveDomain(domain Domain) {
   domains := c.Domains
 
   for index := 0; index < len(domains); index++ {

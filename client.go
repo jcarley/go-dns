@@ -16,7 +16,7 @@ type Router struct {
 }
 
 const (
-  settingsFileName = "settings.json"
+  settingsFileName = "./settings.json"
 )
 
 func main() {
@@ -26,13 +26,15 @@ func main() {
     fmt.Fprintf(os.Stderr, "Error loading configuration: \n\n%s\n", err)
   }
 
-  d := config.LoadDomain("example.com")
-  fmt.Println(d.Name)
+  // d, err := config.LoadDomain("carleycomputers.com")
+  // if err != nil {
+  // fmt.Fprintf(os.Stderr, "Error loading domain: \n\n%s\n", err)
+  // }
+  // fmt.Println(d.Name)
 
   // client := dnsimple.NewClient(config.Token(), config.Email())
 
   domains := config.LoadAllDomains()
-
   for index := 0; index < len(domains); index++ {
     fmt.Println(domains[index].Name)
   }

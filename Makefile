@@ -5,6 +5,7 @@ WARN_COLOR=\033[33;01m
 DEPS=$(go list -f '{{range .TestImports}}{{.}} {{end}}' ./...)
 GOFILES=$(go list -f '{{range .GoFiles}}{{.}} {{end}}' ./...)
 TESTGOFILES=$(go list -f '{{range .TestGoFiles}}{{.}} {{end}}' ./...)
+GOFMT=gofmt -spaces=true -tabindent=false -tabwidth=2
 
 all: deps
 	@mkdir -p bin/
@@ -26,9 +27,9 @@ clean:
 	@rm go-dns go-dns-linuxarm go-dns.exe
 
 format:
-	@echo "$(OK_COLOR)==> Formatting source files$(NO_COLOR)"
-	@echo hello $(GOFILES)
 	# @echo $(GOFILES) | xargs -n1 gofmt -l -w -tabs=false -tabwidth=2 $(GOFILES)
+	@echo "$(OK_COLOR)==> Formatting source files$(NO_COLOR)"
+	@echo $(GOFMT) -w ./...
 
 test: deps
 	@echo "$(OK_COLOR)==> Testing go-dns...$(NO_COLOR)"
