@@ -46,8 +46,6 @@ domain IP to the router's IP.
 
 ## Available Downloads
 
-Mac OS X [amd64](http://dl.bintray.com/jcarley/go-dns/0.1_darwin_amd64.zip) | [386](http://dl.bintray.com/jcarley/go-dns/0.1_darwin_386.zip)
-
-Windows [amd64](http://dl.bintray.com/jcarley/go-dns/0.1_windows_amd64.zip) | [386](http://dl.bintray.com/jcarley/go-dns/0.1_windows_386.zip)
-
-Linux [amd64](http://dl.bintray.com/jcarley/go-dns/0.1_linux_amd64.zip) | [386](http://dl.bintray.com/jcarley/go-dns/0.1_linux_386.zip) | [arm](http://dl.bintray.com/jcarley/go-dns/0.1_linux_arm.zip)
+* Mac OS X [amd64](http://dl.bintray.com/jcarley/go-dns/0.1_darwin_amd64.zip) | [386](http://dl.bintray.com/jcarley/go-dns/0.1_darwin_386.zip)
+* Windows [amd64](http://dl.bintray.com/jcarley/go-dns/0.1_windows_amd64.zip) | [386](http://dl.bintray.com/jcarley/go-dns/0.1_windows_386.zip)
+* Linux [amd64](http://dl.bintray.com/jcarley/go-dns/0.1_linux_amd64.zip) | [386](http://dl.bintray.com/jcarley/go-dns/0.1_linux_386.zip) | [arm](http://dl.bintray.com/jcarley/go-dns/0.1_linux_arm.zip)
