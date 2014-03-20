@@ -24,7 +24,7 @@ updatedeps:
 
 clean:
 	@rm -rf bin/ local/ pkg/ src/
-	@rm go-dns go-dns-linuxarm go-dns.exe
+	@rm go-dns go-dns-linuxarm go-dns-linuxamd64 go-dns.exe
 
 format:
 	# @echo $(GOFILES) | xargs -n1 gofmt -l -w -tabs=false -tabwidth=2 $(GOFILES)
@@ -39,6 +39,6 @@ build:
 	@echo "$(OK_COLOR)==> Building go-dns...$(NO_COLOR)"
 	@go build
 	@GOOS=windows GOARCH=amd64 go build
-	@GOOS=linux GOARCH=arm go build -o go-dns-linuxarm
+	@GOOS=linux GOARCH=amd64 go build -o go-dns-linuxamd64
 
 .PHONY: all clean deps format test updatedeps
