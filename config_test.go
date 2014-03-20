@@ -67,36 +67,3 @@ func TestDomainsAreReadFromConfig(t *testing.T) {
   assert.Equal(t, domain.Name, "finishfirstsoftware.com")
   assert.Equal(t, domain.RecordType, "A")
 }
-
-func TestSettingsAreSavedToConfig(t *testing.T) {
-
-  var config Config
-  if err := decodeConfig(bytes.NewBufferString(defaultConfig), &config); err != nil {
-    fmt.Fprintf(os.Stderr, "%s", err)
-  }
-
-  domain, _ := config.LoadDomain("example.com")
-  config.SaveDomain(domain)
-
-  domain, _ = config.LoadDomain("example.com")
-
-  assert.Equal(t, domain.Name, "example.com")
-  assert.Equal(t, domain.RecordType, "A")
-}
-
-func TestEncodingOfConfig(t *testing.T) {
-  var config Config
-  if err := decodeConfig(bytes.NewBufferString(defaultConfig), &config); err != nil {
-    fmt.Fprintf(os.Stderr, "%s", err)
-  }
-
-  domain, _ := config.LoadDomain("example.com")
-  config.SaveDomain(domain)
-
-  var buffer bytes.Buffer
-  if err := encodeConfig(&buffer, &config); err != nil {
-    fmt.Fprintf(os.Stderr, "%s", err)
-  }
-
-  buffer.WriteTo(os.Stdout)
-}
