@@ -37,8 +37,11 @@ test: deps
 
 build:
 	@echo "$(OK_COLOR)==> Building go-dns...$(NO_COLOR)"
-	@go build
-	@GOOS=windows GOARCH=amd64 go build
-	@GOOS=linux GOARCH=amd64 go build -o go-dns-linuxamd64
+	@XC_ARCH=${XC_ARCH:-"386 amd64 arm"}
+	@XC_OS=${XC_OS:-linux darwin windows}
+	@gox -os="${XC_OS}" -arch="${XC_ARCH}" -output "pkg/{{.OS}}_{{.Arch}}/go-dns-{{.Dir}}" ./...
+	# @gox -os= "pkg/{{.OS}}_{{.Arch}}/go-dns-{{.Dir}}"
+	# @GOOS=windows GOARCH=amd64 go build -o "pkg/{{.OS}}_{{.Arch}}/go-dns-{{.Dir}}"
+	# @GOOS=linux GOARCH=amd64 go build -o "pkg/{{.OS}}_{{.Arch}}/go-dns-{{.Dir}}"
 
 .PHONY: all clean deps format test updatedeps
