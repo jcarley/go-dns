@@ -38,4 +38,8 @@ build:
 	@echo "$(OK_COLOR)==> Building go-dns...$(NO_COLOR)"
 	@./scripts/compile.sh
 
+dist:
+	@echo "$(OK_COLOR)==> Distributing go-dns...$(NO_COLOR)"
+	@./scripts/dist.sh
+
 .PHONY: all clean deps format test updatedeps
