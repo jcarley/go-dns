@@ -1,18 +1,16 @@
 {
-  'Credentials' : {
-      'Email': "your@email.com",
-      'Token': "your_token",
+  "credentials" : {
+      "email": "your@email.com",
+      "token": "your_token"
   },
-  'Domains' : [
+  "domains" : [
     {
-      'Name': "your.domain.com",
-      'RecordType': "A",
-      'CurrentIP': "0.0.0.0"
+      "name": "yourdomain.com",
+      "record-type": "A"
     },
     {
-      'Name': "another.domain.com",
-      'RecordType': "A",
-      'CurrentIP': "0.0.0.0"
+      "name": "anotherdomain.com",
+      "record-type": "A"
     }
   ]
 }
