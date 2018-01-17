@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "s4bV/Ztqgu76NoPxmNusa0U2uV8=",
+			"path": "github.com/dnsimple/dnsimple-go/dnsimple",
+			"revision": "af81b84b6e07a129c4067322cc13002b3ca6a9e9",
+			"revisionTime": "2018-01-05T11:20:13Z"
+		},
+		{
+			"checksumSHA1": "p3IB18uJRs4dL2K5yx24MrLYE9A=",
+			"path": "github.com/google/go-querystring/query",
+			"revision": "53e6ce116135b80d037921a7fdd5138cf32d7a8a",
+			"revisionTime": "2017-01-11T10:11:55Z"
+		}
+	],
+	"rootPath": "github.com/jcarley/go-dns"
+}
