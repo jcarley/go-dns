@@ -2,3 +2,5 @@ settings.json
 settings.json.backup
 .DS_Store
 /pkg
+go-dns
+sample_records.txt
